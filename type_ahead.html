@@ -308,9 +308,13 @@
         const div = document.querySelector("#suggestions");
         div.innerHTML="";
         div.style.width = `${foodInput.offsetWidth}px`;
-        if(searchTerm==""){lastFiltered=""; return;};
-        filtered.forEach(x=>div.innerHTML+=`<li>${x.name}</li>`);
-        lastFiltered = filtered;
+        if(searchTerm==""){
+          lastFiltered="";
+          return;
+        } else {
+          filtered.forEach(x=>div.innerHTML+=`<li>${x.name}</li>`);
+          lastFiltered = filtered;
+        }
       }
     }
 
@@ -324,10 +328,7 @@
       }
 
     foodInput.addEventListener('keyup', displaySavedFoods);
-    suggestions.addEventListener('click', )
 
-    foodInput.value = "beef";
-    displaySavedFoods();
 </script>
 </body>
 
