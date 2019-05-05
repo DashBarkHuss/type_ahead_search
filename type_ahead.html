@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        :root {
+            --accent-color: rgb(0, 196, 163);
+            --text-color: rgb(2, 90, 75);
+            --text-highlight: rgb(227, 255, 247);
+            --border-radius: 20px;
+            --shadow: 0px 010px 8px rgba(0, 0, 0, 0.26);
+            --main-hue: rgb(5, 219, 184);
+            --second-hue: rgb(5, 219, 119);
+            --button-font-size: 1.1rem;
+            --add-button-height: 2.3rem;
+        }
+
+        html {
+            background-image: linear-gradient(to bottom right, var(--main-hue), var(--second-hue));
+            font-size: 20px;
+            font-family: system-ui;
+        }
+
+        html,
+        body {
+            height: 100%;
+            padding: 10% 0 0 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        html>* {
+            box-sizing: border-box;
+        }
+
+        form[name=food_search] {
+            width: fit-content;
+            border-radius: var(--border-radius);
+            position: relative;
+            margin: auto;
+            margin-bottom: 5%;
+        }
+
+        input:focus {
+            outline: none;
+            background-color: var(--text-highlight);
+        }
+
+        #instructions {
+            color: white;
+            text-align: center;
+            text-transform: uppercase;
+            margin: 10%;
+            padding: 2%;
+            font-size: 1.4rem;
+        }
+
+        input#search {
+            color: white;
+            background: var(--accent-color);
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            text-transform: lowercase;
+            font-weight: 500;
+        }
+
+        input#food_to_search {
+            color: var(--text-color) !important;
+            border-right: none;
+            border-radius: var(--border-radius) 0 0 var(--border-radius);
+        }
+
+
+        input#food_to_search:-internal-autofill-selected,
+        input#food_to_search:-internal-autofill-previewed {
+            -webkit-text-fill-color: var(--text-color);
+            -webkit-box-shadow: 0 0 0px 1000px var(--text-highlight) inset;
+        }
+
+        form[name=search_results] {
+            background: white;
+            margin: 3%;
+            border-radius: var(--border-radius);
+            border: 5px solid var(--accent-color);
+            height: 30%;
+            overflow: hidden;
+            position: relative;
+            z-index: 0;
+            box-shadow: var(--shadow);
+        }
+
+        #search_results_wrapper {
+            overflow-y: scroll;
+            position: relative;
+            height: 100%;
+
+        }
+
+        #search_results_wrapper::-webkit-scrollbar {
+            width: 10px;
+            background-color: var(--text-highlight);
+        }
+
+        #search_results_wrapper::-webkit-scrollbar-thumb {
+            background-color: var(--main-hue);
+            border-radius: var(--border-radius);
+        }
+
+        #search_results_wrapper::-webkit-scrollbar-track {
+            margin: 4% 0 var(--add-button-height);
+        }
+
+
+        form[name=search_results] label {
+            cursor: pointer;
+        }
+
+        form[name=search_results] input:hover {
+            background: var(--text-highlight);
+        }
+
+        form[name=search_results] input[name=food] {
+            opacity: 0;
+            position: absolute;
+            cursor: pointer;
+        }
+
+        .search_result:first-of-type .selected {
+            border-radius: 15px 15px 0 0;
+        }
+
+        .search_result input:checked~.selected {
+            background: var(--second-hue);
+            height: 100%;
+            position: absolute;
+            width: 100%;
+            margin: -4%;
+        }
+
+        .search_result input:checked~.label {
+            color: white;
+        }
+
+        .label {
+            z-index: 1;
+            position: relative;
+        }
+
+        /* On mouse-over, add a background color */
+        .search_result:hover {
+            background-color: var(--text-highlight);
+        }
+
+        .search_result:first-of-type {
+            border-radius: 15px 15px 0 0;
+        }
+
+
+        form[name=search_results] input[name=add],
+        button#save {
+            font-size: var(--button-font-size);
+            border: 5px solid var(--accent-color);
+            background: var(--accent-color);
+            color: white;
+            font-weight: 500;
+            display: block;
+        }
+
+        button#save {
+            border-radius: var(--border-radius);
+            margin: 10px auto 15px;
+        }
+
+        form[name=search_results] input[name=add] {
+            /* display: none; */
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            z-index: 1;
+            height: var(--add-button-height);
+            border-top: 2px solid var(--accent-color);
+        }
+
+
+        form[name=search_results] .search_result {
+            color: var(--text-color);
+            display: block;
+            border-bottom: 2px solid var(--accent-color);
+            padding: 4%;
+            position: relative;
+        }
+
+        form[name=search_results] .search_result:last-child {
+            margin-bottom: var(--add-button-height);
+            border-bottom: none;
+        }
+
+        #ingredients::before {
+            color: white;
+            content: "Ingredients";
+            font-size: 1.1em;
+            text-transform: uppercase;
+            font-weight: 500;
+            margin: auto;
+            width: fit-content;
+            display: block;
+        }
+
+        .invisible {
+            display: none;
+        }
+
+        #ingredients button {
+            color: white;
+        }
+
+        #ingredients .remove {
+            color: white;
+            border: none;
+            background: none;
+        }
+
+        #ingredients ul {
+            color: white;
+            margin: 0 3%;
+            border: 5px solid white;
+            padding: 5px;
+            text-transform: uppercase;
+            list-style-type: none;
+        }
+
+        #ingredients li {
+            padding: 5px;
+            border-bottom: 1px dashed white;
+        }
+
+        #ingredients li:last-of-type {
+            border-bottom: none;
+        }
+
+        button#save {
+            box-shadow: var(--shadow);
+        }
+
+        #suggestions{
+          margin:0;
+          padding: 0;
+          height: fit-content;
+          
+        }
+        #suggestions li{
+          list-style-type: none;
+          background: white;
+          border-bottom: 1px solid var(--accent-color);
+          font-size:.8rem;
+          padding: 2%;
+          margin-left: 6%;
+          color: var(--text-color);
+          box-shadow: var(--shadow);
+        }
+        #search_input_wrapper>* {
+            font-size: var(--button-font-size);
+            border: 5px solid var(--accent-color);
+            padding: 5px;
+        }
+        #search_input_wrapper{
+          border-radius: var(--border-radius);
+          box-shadow: var(--shadow);
+          width: fit-content;
+        }
+
+    </style>
+
+</head>
+
+<body>
+    <form name="food_search" id="food_search">
+        <div id="search_input_wrapper">
+        <input type="text" id="food_to_search" autocomplete="off" /><input 
+                type="submit" id="search" value="Search" />
+        </div>
+                <ul id ="suggestions"></ul>
+
+    </form>
+
+    </ul>
+    <br>
+    <!-- Ingredients: -->
+    <div id="ingredients" class="invisible"></div>
+
+<script type="text/javascript">
+    const form = document.querySelector("form[name=food_search]");
+    foodInput = form.querySelector("#food_to_search");
+    const suggestions = form.querySelector("#suggestions");
+
+    let lastFiltered=[];
+
+    async function displaySavedFoods(){
+      const foods = await fetch("saved_food_data.json").then(x=>x.json()).then(x=>x.foods);
+      const searchTerm = foodInput.value;
+      
+      const filtered = filter(foods, searchTerm);
+      const filteredChanged = filtered.length != lastFiltered.length;
+      if (filteredChanged){
+        const div = document.querySelector("#suggestions");
+        div.innerHTML="";
+        div.style.width = `${foodInput.offsetWidth}px`;
+        if(searchTerm==""){lastFiltered=""; return;};
+        filtered.forEach(x=>div.innerHTML+=`<li>${x.name}</li>`);
+        lastFiltered = filtered;
+      }
+    }
+
+    function filter(foods, searchTerm){
+        let filtered = foods;
+        const terms = searchTerm.split(" ").map(x=>x.toLowerCase());
+        for(i=0; i<terms.length; i++){
+          filtered = filtered.filter(food=>food.name.toLowerCase().includes(terms[i]));
+        }
+        return filtered;
+      }
+
+    foodInput.addEventListener('keyup', displaySavedFoods);
+
+
+    foodInput.value = "beef";
+    displaySavedFoods();
+</script>
+</body>
+
+</html>

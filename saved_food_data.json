@@ -1,0 +1,32 @@
+{
+  "foods": [
+    {
+      "ndbno": "11135",
+      "name": "Cauliflower, raw"
+    },
+    {
+      "ndbno": "23472",
+      "name": "Beef, ground, 93% lean meat / 7% fat, raw"
+    },
+    {
+      "name": "Beef, chuck eye roast, boneless, America's Beef Roast, separable lean only, trimmed to 0\" fat, all grades, cooked, roasted",
+      "ndbno": "13821"
+    },
+    {
+      "name": "Beef, chuck eye roast, boneless, America's Beef Roast, separable lean only, trimmed to 0\" fat, select, cooked, roasted",
+      "ndbno": "13823"
+    },
+    {
+      "name": "Spinach, raw",
+      "ndbno": "11457"
+    },
+    {
+      "name": "Oil, olive, salad or cooking",
+      "ndbno": "04053"
+    },
+    {
+      "name": "Broccoli, raw",
+      "ndbno": "11090"
+    }
+  ]
+}
