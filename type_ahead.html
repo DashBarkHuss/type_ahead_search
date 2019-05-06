@@ -292,43 +292,40 @@
     <div id="ingredients" class="invisible"></div>
 
 <script type="text/javascript">
-    const form = document.querySelector("form[name=food_search]");
-    foodInput = form.querySelector("#food_to_search");
-    const suggestions = form.querySelector("#suggestions");
+    const form = document.querySelector('form[name=food_search]');
+    const foodInput = form.querySelector('#food_to_search');
+    const suggestions = form.querySelector('#suggestions');
 
-    let lastFiltered=[];
+    let lastFiltered = [];
 
-    async function displaySavedFoods(){
-      const foods = await fetch("saved_food_data.json").then(x=>x.json()).then(x=>x.foods);
-      const searchTerm = foodInput.value;
-      
-      const filtered = filter(foods, searchTerm);
-      const filteredChanged = filtered.length != lastFiltered.length;
-      if (filteredChanged){
-        const div = document.querySelector("#suggestions");
-        div.innerHTML="";
-        div.style.width = `${foodInput.offsetWidth}px`;
-        if(searchTerm==""){
-          lastFiltered="";
-          return;
-        } else {
-          filtered.forEach(x=>div.innerHTML+=`<li>${x.name}</li>`);
-          lastFiltered = filtered;
-        }
+    function filter(foods, searchTerm) {
+      let filtered = foods;
+      const terms = searchTerm.split(' ').map(x => x.toLowerCase());
+      for (let i = 0; i < terms.length; i++) {
+        filtered = filtered.filter(food => food.name.toLowerCase().includes(terms[i]));
       }
+      return filtered;
     }
 
-    function filter(foods, searchTerm){
-        let filtered = foods;
-        const terms = searchTerm.split(" ").map(x=>x.toLowerCase());
-        for(i=0; i<terms.length; i++){
-          filtered = filtered.filter(food=>food.name.toLowerCase().includes(terms[i]));
-        }
-        return filtered;
+    async function displaySavedFoods() {
+      const foods = await fetch('saved_food_data.json').then(x => x.json()).then(x=>x.foods);
+      const searchTerm = foodInput.value;
+    
+      if (searchTerm === '') {
+        suggestions.innerHTML = '';
+        return;
       }
-
+      console.log('here2');
+      const filtered = filter(foods, searchTerm);
+      const filteredChanged = filtered.length !== lastFiltered.length;
+      if (filteredChanged) {
+        suggestions.style.width = `${foodInput.offsetWidth}px`;
+        suggestions.innerHTML = '';
+        filtered.forEach((x) => { suggestions.innerHTML += `<li>${x.name}</li>`; });
+        lastFiltered = filtered;
+      }
+    }
     foodInput.addEventListener('keyup', displaySavedFoods);
-
 </script>
 </body>
 
