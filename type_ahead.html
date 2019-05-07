@@ -251,15 +251,26 @@
           height: fit-content;
           
         }
-        #suggestions li{
+        #suggestions li {
           list-style-type: none;
           background: white;
           border-bottom: 1px solid var(--accent-color);
-          font-size:.8rem;
-          padding: 2%;
           margin-left: 6%;
           color: var(--text-color);
           box-shadow: var(--shadow);
+        }
+
+        #suggestions li button{
+          font-size:.8rem;
+          text-align: left;
+          border:none;
+          color: var(--text-color);
+          padding: 2%;
+        }
+
+        #suggestions li button:focus{
+          outline: none;
+          background: var(--text-highlight);
         }
         #search_input_wrapper>* {
             font-size: var(--button-font-size);
@@ -313,19 +324,60 @@
     
       if (searchTerm === '') {
         suggestions.innerHTML = '';
+        lastFiltered = [];
         return;
       }
-      console.log('here2');
+
       const filtered = filter(foods, searchTerm);
       const filteredChanged = filtered.length !== lastFiltered.length;
       if (filteredChanged) {
         suggestions.style.width = `${foodInput.offsetWidth}px`;
         suggestions.innerHTML = '';
-        filtered.forEach((x) => { suggestions.innerHTML += `<li>${x.name}</li>`; });
+        filtered.forEach((x) => { suggestions.innerHTML += `<li><button class = "suggestion">${x.name}</button></li>`; });
         lastFiltered = filtered;
       }
     }
+
+    function traverseFocus(e) {
+      if (lastFiltered.length === 0 || (e.keyCode !== 38 && e.keyCode !== 40)) return;
+      const currentFocus = document.activeElement;
+
+      const isDown = e.keyCode === 40;
+      const focusIsOnASuggestion = currentFocus.className === 'suggestion';
+      const allSuggestions = document.querySelectorAll('.suggestion');
+
+      const nextIndexToFocus = (() => {
+        let nextIndex;
+        if (!focusIsOnASuggestion) {
+          nextIndex = isDown ? 0 : allSuggestions.length - 1;
+          return nextIndex;
+        }
+
+        const direction = isDown ? 1 : -1;
+        const currentFocusIndex = [...allSuggestions].indexOf(currentFocus);
+        nextIndex = currentFocusIndex + direction;
+
+        if (nextIndex === -1) {
+          return allSuggestions.length - 1;
+        }
+
+        if (nextIndex === allSuggestions.length) {
+          return 0;
+        }
+        return nextIndex;
+      })();
+
+      const focusOnThis = allSuggestions[nextIndexToFocus];
+      focusOnThis.focus();
+    }
+
+    function changeFocus(e) {
+      if (e.target.className === 'suggestion') e.target.focus();
+    }
+
     foodInput.addEventListener('keyup', displaySavedFoods);
+    form.addEventListener('keydown', traverseFocus);
+    form.addEventListener('mouseover', changeFocus);
 </script>
 </body>
 
