@@ -11,6 +11,7 @@ You can select suggestions to search:
 
 ![screenrecording](docs/ux_5-8.gif)
 
+## How To Use
 To use this search bar for yourself, you'll want to:
 
 1. Replace the `saved_food_data.json` file with your .json file and replace instances of `saved_food_data.json` in the `type_ahead.html` file with your .json file name.
