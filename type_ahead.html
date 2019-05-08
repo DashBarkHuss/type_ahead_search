@@ -312,14 +312,14 @@
     function filter(foods, searchTerm) {
       let filtered = foods;
       const terms = searchTerm.split(' ').map(x => x.toLowerCase());
-      for (let i = 0; i < terms.length; i++) {
+      for (let i = 0; i < terms.length; i += 1) {
         filtered = filtered.filter(food => food.name.toLowerCase().includes(terms[i]));
       }
       return filtered;
     }
 
     async function displaySavedFoods() {
-      const foods = await fetch('saved_food_data.json').then(x => x.json()).then(x=>x.foods);
+      const foods = await fetch('saved_food_data.json').then(x => x.json()).then(x => x.foods);
       const searchTerm = foodInput.value;
     
       if (searchTerm === '') {
@@ -333,7 +333,7 @@
       if (filteredChanged) {
         suggestions.style.width = `${foodInput.offsetWidth}px`;
         suggestions.innerHTML = '';
-        filtered.forEach((x) => { suggestions.innerHTML += `<li><button class = "suggestion">${x.name}</button></li>`; });
+        filtered.forEach((x) => { suggestions.innerHTML += `<li><button class = "suggestion" id="${x.ndbno}">${x.name}</button></li>`; });
         lastFiltered = filtered;
       }
     }
@@ -375,9 +375,25 @@
       if (e.target.className === 'suggestion') e.target.focus();
     }
 
+    function searchSuggestedFood(e) {
+      e.preventDefault();
+      if (document.activeElement.className !== 'suggestion') return;
+      console.log(document.activeElement.id, document.activeElement.innerHTML);
+    }
+
+    function formHandler(e) {
+      if (e.keyCode === 13 && document.activeElement.className === 'suggestion') {
+        e.preventDefault();
+        searchSuggestedFood(e);
+      }
+
+      if (lastFiltered.length > 0 && (e.keyCode === 38 || e.keyCode === 40)) traverseFocus(e);
+    }
+
     foodInput.addEventListener('keyup', displaySavedFoods);
-    form.addEventListener('keydown', traverseFocus);
-    form.addEventListener('mouseover', changeFocus);
+    form.addEventListener('keydown', formHandler);
+    suggestions.addEventListener('mouseover', changeFocus);
+    suggestions.addEventListener('click', searchSuggestedFood);
 </script>
 </body>
 
