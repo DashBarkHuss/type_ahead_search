@@ -2,9 +2,11 @@
 A search bar that suggests matching items from a json file.
 
 You can traverse suggestions:
+
 ![screenrecording](docs/ui_5-7.gif)
 
 You can select suggestions to search:
+
 ![screenrecording](docs/ux_5-8.gif)
 
 To use this search bar for yourself, you'll want to:
