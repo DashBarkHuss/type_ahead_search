@@ -1,5 +1,5 @@
 # type_ahead_search
-a search bar that suggests matching items from a json file
+A search bar that suggests matching items from a json file.
 
 ![screenrecording](imgs/ux_5-8.gif)
 
