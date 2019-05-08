@@ -1,4 +1,4 @@
-# type_ahead_search
+# Type-ahead Search
 A search bar that suggests matching items from a json file.
 
 ![screenrecording](docs/ux_5-8.gif)
