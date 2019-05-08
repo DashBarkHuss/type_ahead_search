@@ -1,10 +1,12 @@
 # Type-ahead Search
 A search bar that suggests matching items from a json file.
 
+## Traverse
 You can traverse suggestions:
 
 ![screenrecording](docs/ui_5-7.gif)
 
+## Select
 You can select suggestions to search:
 
 ![screenrecording](docs/ux_5-8.gif)
