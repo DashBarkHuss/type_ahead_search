@@ -1,0 +1,99 @@
+<style>
+:root {
+    --accent-color: rgb(0, 196, 163);
+    --text-color: rgb(2, 90, 75);
+    --text-highlight: rgb(227, 255, 247);
+    --border-radius: 20px;
+    --shadow: 0px 010px 8px rgba(0, 0, 0, 0.26);
+    --main-hue: rgb(5, 219, 184);
+    --second-hue: rgb(5, 219, 119);
+    --button-font-size: 1.1rem;
+}
+
+html {
+    background-image: linear-gradient(to bottom right, var(--main-hue), var(--second-hue));
+    font-size: 20px;
+}
+
+html,
+body {
+    height: 100%;
+    padding: 10% 0 0 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html>* {
+    box-sizing: border-box;
+}
+
+form[name=food_search] {
+    width: fit-content;
+    border-radius: var(--border-radius);
+    position: relative;
+    margin: auto;
+    margin-bottom: 5%;
+}
+
+input:focus {
+    outline: none;
+    background-color: var(--text-highlight);
+}
+input#search {
+    color: white;
+    background: var(--accent-color);
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    text-transform: lowercase;
+    font-weight: 500;
+}
+
+input#food_to_search {
+    color: var(--text-color) !important;
+    border-right: none;
+    border-radius: var(--border-radius) 0 0 var(--border-radius);
+}
+
+input#food_to_search:-internal-autofill-selected,
+input#food_to_search:-internal-autofill-previewed {
+    -webkit-text-fill-color: var(--text-color);
+    -webkit-box-shadow: 0 0 0px 1000px var(--text-highlight) inset;
+}
+
+#suggestions{
+  margin:0;
+  padding: 0;
+  height: fit-content;
+  
+}
+#suggestions li {
+  list-style-type: none;
+  background: white;
+  border-bottom: 1px solid var(--accent-color);
+  margin-left: 6%;
+  color: var(--text-color);
+  box-shadow: var(--shadow);
+}
+
+#suggestions li button{
+  font-size:.8rem;
+  text-align: left;
+  border:none;
+  color: var(--text-color);
+  padding: 2%;
+}
+
+#suggestions li button:focus{
+  outline: none;
+  background: var(--text-highlight);
+}
+
+#search_input_wrapper>* {
+    font-size: var(--button-font-size);
+    border: 5px solid var(--accent-color);
+    padding: 5px;
+}
+#search_input_wrapper{
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  width: fit-content;
+}
