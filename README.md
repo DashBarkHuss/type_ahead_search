@@ -1,7 +1,7 @@
 # type_ahead_search
 A search bar that suggests matching items from a json file.
 
-![screenrecording](imgs/ux_5-8.gif)
+![screenrecording](docs/ux_5-8.gif)
 
 To use this search bar for yourself, you'll want to:
 
